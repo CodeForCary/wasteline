@@ -76,8 +76,13 @@
             navigator.geolocation.getCurrentPosition(function(position) {
                 var latLong = [position.coords.latitude, position.coords.longitude].map(function (coord) {
                     return Number(coord).toFixed(5);
-                });
+                }).toString().replace(",", ", ");
                 form.find("input[type=text]").eq(0).val(String(latLong));    
+                searchLatLong([position.coords.latitude, position.coords.longitude])
+                    .then(displayResult,
+                    function () {
+                        $("<a>").attr("href", "#notFoundModal").attr("data-toggle", "modal").click();
+                    });
             },
             function (error) { console.error(error); },
             {
@@ -101,6 +106,36 @@
                 button.prop("disabled", false);
             });
     });
+    $("form#address-form").on("keyup mouseup focus", "input[type=text]", function() { 
+        var form = $(this.form);
+        form.find("button:last").prop("disabled", ($(this).val() || "") === "");
+    });    
+    
+    // Search by Parameters
+    $("form#specify-form").on("click", "button.primary", function (e) {
+        var form = $(this.form);
+            
+        var cycle = form.find("button.selected").eq(0).text() || "",
+            weekday = form.find(".btn-group:last button").text();
+            
+        displayResult({
+            address: cycle + " cycle, " + weekday + " pick-up",
+            cycle: cycle.toLowerCase(),
+            day: weekday
+        });
+    });
+    $("form#specify-form").on("click", ".btn-group[data-toggle=tab] button", function() { 
+        var form = $(this.form);
+        form.find(".btn-group button:not(.dropdown-toggle)").removeClass("selected");
+        $(this).addClass("selected").trigger("blur"); 
+        form.find("button:last").prop("disabled", form.find(".selected").length < 2);
+    });
+    $("form#specify-form").on("click", ".dropdown-item", function() { 
+        var form = $(this).closest("form");
+        var option = $(this);
+        option.parent().prev(".dropdown-toggle").text(option.text()).addClass("selected");
+        form.find("button:last").prop("disabled", form.find(".selected").length < 2);
+    });
     
     var searchAddress = function (address) {
         var deferred = q.defer();
@@ -123,6 +158,34 @@
                 dataType: "json"
             });               
         });
+        
+        return deferred.promise;
+    }; 
+       
+    var searchLatLong = function (coords) {
+        var deferred = q.defer();
+        
+        $.ajax({
+            type: "POST",
+            url: "/api/Locate",
+            data: { "coords": coords },
+            success: function (response) {
+                if (!response.error) {
+                    // Persist the results data locally
+                    var data = _.extend(response, { timestamp: (new Date()).valueOf() });
+                    localforage.setItem(response.address, data, function () {
+                        console.info("Data saved for " + response.address);
+                    });
+                    
+                    deferred.resolve(data);
+                }
+                else  {
+                    deferred.reject(response.error);
+                }
+            },
+            error: deferred.reject,
+            dataType: "json"
+        });  
         
         return deferred.promise;
     };

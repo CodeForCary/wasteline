@@ -137,6 +137,37 @@ app.post('/api/Search', function (req, res) {
     });
 });
 
+app.post('/api/Locate', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "POST");
+    res.header("Content-Type", "application/json");
+    
+    var data = req.body || {};
+    
+    var response = {
+        coordinates: data.coords || data["coords[]"]
+    };
+    
+    apiProxy.getCycle(response.coordinates).then(function (result) {
+        console.log(result); 
+        response.cycle = result.cycle;
+        response.day = result.day;
+        response.isRecyclingWeek = service.isRecyclingWeek(result.cycle);
+        response.isHolidayWeek = service.isHolidayWeek ();
+        res.send(response);
+        res.end();
+    }, function (error) {
+        console.error(error);
+        response.error = error;
+        res.send(response);
+        res.end();
+    })
+    .catch (function (ex) {
+        console.error(ex.message);
+        res.end();
+    });
+});
+
 app.get('/api/NextTwoWeeks', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "POST");
