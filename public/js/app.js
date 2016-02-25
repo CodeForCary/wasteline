@@ -6,7 +6,7 @@
             var a = [];
             if (p.indexOf("=") !== -1) {
                 var pair = p.split("=");
-                a = [unescape(pair[0]), unescape(pair[1].replace(/\+/g, " "))];
+                a = [decodeURIComponent(pair[0]), decodeURIComponent(pair[1].replace(/\+/g, " "))];
             }
             return a;
         }));
@@ -14,16 +14,21 @@
         if (search["q"]) {
             var address = search["q"] || "";
             $("form#address-form input[type=text]").eq(0).val(address.substring(0, address.indexOf(",") > 0 ? address.indexOf(",") : address.length));
-            searchAddress(search["q"]);
+            searchAddress(search["q"]).then(displayResult);
             $("#see-schedule").removeClass("hidden");
         }
         else {
             getLastAddress().then(function (value) {
                 displayResult(value, true);
-                $("form#address-form input[type=text]").eq(0).val(value.address.substring(0, value.address.indexOf(",")));
-                $("#see-schedule").removeClass("hidden");
+                if (value && value.address) {
+                    $("form#address-form input[type=text]").eq(0).val(value.address.substring(0, value.address.indexOf(",")));
+                    showLink("see-schedule");
+                }
+                else {
+                    showLink("get-started");
+                }
             }, function () {
-                $("#get-started").removeClass("hidden");
+                showLink("get-started");
             });
         }    
         $("form#address-form input[type=text]").eq(0).on("focus", function () {
@@ -56,6 +61,12 @@
             },
             dataType: "json"
         });
+    }
+    
+    function showLink(id) {
+        _.delay(function () {
+            $("#" + id).removeClass("hidden");
+        }, 2000);
     }
     
     // Geolocate
