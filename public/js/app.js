@@ -261,7 +261,7 @@
         
         ["blue", "yellow"].forEach(function (cycle, i) {
             var td = $(".calendar tbody tr." + cycle + " td").eq(index);
-            if (td.parent().find(".holiday").index() > td.index()) {
+            if (td.parent().find(".holiday").index() >= td.index()) {
                 td = td.prev("td");
             }
             if (cycle === data.cycle.toLowerCase()) {
