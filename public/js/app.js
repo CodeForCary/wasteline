@@ -106,7 +106,7 @@
                 button.prop("disabled", false);
             });
     });
-    $("form#address-form").on("keyup mouseup focus", "input[type=text]", function() { 
+    $("form#address-form").on("keyup mouseup focus change paste input", "input[type=text]", function() { 
         var form = $(this.form);
         form.find("button:last").prop("disabled", ($(this).val() || "") === "");
     });    
