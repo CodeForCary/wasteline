@@ -35,6 +35,11 @@
             $(this).val("");
         });
         
+        if (!window.orientation) {
+            $("#geolocate-form input[type=text]").addClass("not-mobile").val("Only enabled for mobile devices");
+            $("#geolocate-form button").prop("disabled", true);
+        }
+        
         $.ajax({
             type: "GET",
             url: "/api/NextTwoWeeks",

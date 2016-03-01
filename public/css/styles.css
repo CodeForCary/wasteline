@@ -215,6 +215,10 @@ button:disabled {
     }  
 }
 
+#geolocate-form input[type=text].not-mobile {
+    color: #d92121;
+    text-align: center;
+}
 
 #specify-form .btn-group button {
     font-size: 1.15em;
