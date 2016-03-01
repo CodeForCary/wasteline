@@ -84,6 +84,15 @@ h1.brand > span + span, .navbar-brand > span + span {
     font-style: oblique !important;
 }
 
+header .header-content .inner p {
+    margin-bottom: 20px;
+    font-size: 20px !important;
+    font-weight: 300;        
+    padding-left: 0;
+    padding-right: 20px;
+    color: #222;
+}
+
 /* responsive welcome */
 @media(min-width:48em) {
     .header-content img {
@@ -91,6 +100,9 @@ h1.brand > span + span, .navbar-brand > span + span {
         width: 500px;
         height: 334px;
         margin-left: .1rem;
+    }
+    header .header-content .inner p {
+        font-size: 24px !important;
     }
 }
 @media(max-width:960px) {
@@ -109,10 +121,6 @@ h1.brand > span + span, .navbar-brand > span + span {
     header .header-content .inner p {
         margin-bottom: 20px;
         font-size: 13px !important;
-        font-weight: 300;        
-        padding-left: 0;
-        padding-right: 20px;
-        color: #222;
     }
     .calendar tr th:first-of-type, .calendar tr th:last-of-type, .calendar tr td:first-of-type, .calendar tr td:last-of-type {
         display: none;
@@ -141,7 +149,13 @@ button:disabled {
 }
 
 .calendar {
-    padding: 0 20% 0 20%;
+    padding: 0 10% 0 10%;
+}
+
+.calendar .table-container {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
 }
 
 .calendar tr.yellow {
@@ -192,6 +206,13 @@ button:disabled {
 .calendar .title {
     font-size: 1.5em;
     text-align: center;
+}
+
+@media(max-width:480px) {
+    .calendar tr p {
+        line-height: 13px;
+        font-size: 12px;
+    }  
 }
 
 

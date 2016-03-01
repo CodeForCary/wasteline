@@ -20,7 +20,11 @@
     var year = (new Date()).getFullYear();
     
     var holidays = {
-        "Ian’s Birthday": moment("{0}-03-03".format(year)),
+        "Employee Appreciation Day": (function (year) {
+                var first = new Date(year, 2, 1),
+                    dayOfWeek = first.getDay();
+                return moment("{0}-03-{1}".format(year, ("0" + String(1 + (12 - dayOfWeek) % 7)).slice(-2)));
+            })(year),
         "New Year’s Day": moment("{0}-01-01".format(year)),
         "Independence Day": moment("{0}-07-04".format(year)),
         "Thanksgiving": (function (year) {
