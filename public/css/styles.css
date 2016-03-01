@@ -130,7 +130,6 @@ h1.brand > span + span, .navbar-brand > span + span {
 
 section {
     min-height: 100% !important;
-    height: 100% !important;
 }
 
 .hidden {
