@@ -70,9 +70,33 @@
         return deferred.promise;
     };
     
+    var put = function (entity) {
+        var collection = this,
+            deferred = q.defer();
+        
+        try {
+            db[collection].insert(entity, function (err, newEntity) {
+                if (err || !newEntity) {
+                    console.log("Insert failed");
+                }
+
+                deferred.resolve(newEntity);
+            });
+        }
+        catch (ex) {
+            console.error(ex);
+            deferred.reject(ex);
+        }
+        
+        return deferred.promise;
+    };
+    
     var service = {
         get: function (collection, query) {
             return get.call(collection, query);
+        },
+        put: function (collection, entity) {
+            return put.call(collection, entity);
         },
         getUsers:  get.bind("User")
     };
