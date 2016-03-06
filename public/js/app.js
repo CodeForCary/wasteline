@@ -142,6 +142,21 @@
         option.parent().prev(".dropdown-toggle").text(option.text()).addClass("selected");
         form.find("button:last").prop("disabled", form.find(".selected").length < 2);
     });
+        
+    // Subscribe
+    $("form#subscribe-form").on("click", "button", function (e) {
+        var form = $(this.form),
+            button = form.find("button");
+            
+        var phoneNumber = form.find("input[type=text]").eq(0).val();
+        var day = 1;
+        button.prop("disabled", true);
+        subscribe({ phoneNumber: phoneNumber, day: day })
+            .then(displayResult)
+            .finally(function () {
+                button.prop("disabled", false);
+            });
+    });
     
     var searchAddress = function (address) {
         var deferred = q.defer();
@@ -167,6 +182,28 @@
         
         return deferred.promise;
     }; 
+    
+    var subscribe = function (data) {
+        var deferred = q.defer();
+        
+        $.ajax({
+            type: "POST",
+            url: "/api/Subscribe",
+            data: data,
+            success: function (response) {
+                if (response.subscribed) {
+                    deferred.resolve();
+                }
+                else {
+                    deferred.reject();
+                }
+            },
+            error: deferred.reject,
+            dataType: "json"
+        });      
+        
+        return deferred.promise;        
+    };
        
     var searchLatLong = function (coords) {
         var deferred = q.defer();

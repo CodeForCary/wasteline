@@ -11,8 +11,6 @@
     var tomorrow = moment().add(1, "day"),
         query = { day: tomorrow.get("weekday") };
     
-    console.info("QUERY", query);
-    
     repo.get("Notification", query).then(function (notifications) {
         console.info(notifications.length, "notifications to send");
         notifications.forEach(function (notification) {

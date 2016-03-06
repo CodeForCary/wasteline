@@ -154,8 +154,11 @@
             <p id="address" class="title"></p>
         </div>
         <div class="row">
-            <div class="col-lg-12 text-xs-center">
+            <div class="col-lg-6 text-xs-center">
                 <a href="#lookup" class="btn btn-primary-outline btn-xl page-scroll wow fadeInUp hidden">Lookup Another Location</a>
+            </div>
+            <div class="col-lg-6 text-xs-center">
+                <a href="#subscribeModal" data-toggle="modal" class="btn btn-primary-outline btn-xl page-scroll wow fadeInUp hidden">Subscribe to Alerts</a>
             </div>
         </div>
     </div>
@@ -269,6 +272,28 @@
                 <p class="text-xs-left"><a href="http://www.codeforcary.org" target="_blank">Visit the Code for Cary brigade</a></p>
                 <br>
                 <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true"> OK </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="subscribeModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h2 class="text-xs-center">Subscribe</h2>
+                <h6 class="text-xs-center">SMS Text Notifications</h6>
+                <hr>
+                <p class="text-xs-left">
+                    <form style="padding: 0 20px 0 20px" autocomplete="on" id="subscribe-form" onsubmit="return false">
+                        <input type="text" name="phoneNumber" class="form-control" placeholder="Phone number">
+                        <br>
+                        <button class="primary">Subscribe</button>
+                    </form>
+                </p>
+                <p class="text-xs-left">
+                    Reminders by SMS message or automated voice call will be added very soon so keep checking back!
+                </p>
+                <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true"> Cancel </button>
             </div>
         </div>
     </div>
