@@ -89,8 +89,13 @@
         };
         
 		var getNextTwoWeeks = function (day) {
-            var today = moment().tz("America/New_York").startOf("day"),
-                startOfWeek = today.clone().subtract(today.weekday(), "days"),
+            var today = moment().tz("America/New_York").startOf("day");
+            
+            if (today.weekday() >= 6) {
+                today = today.add(1, "days");
+            }
+            
+            var startOfWeek = today.clone().subtract(today.weekday(), "days"),
                 nextTwoWeeks = Array.apply(0, new Array(14)).map(function (o, i) {
                     try {
                         var day = startOfWeek.clone().add(i, "days"),
