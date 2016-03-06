@@ -41,22 +41,13 @@
             deferred = q.defer();
         
         try {
-            db[collection].find({}, function (err, items) {
+            db[collection].find(query || {}, function (err, items) {
                 if (err || !items) {
                     console.log("No items found");
                 }
                 else {
                     console.log((items.length) + " items found");
                     stripDatabaseIds(items);
-                }
-
-                if (items.length && query && Object.keys(query).length) {
-                  Object.keys(query).forEach(function (key) {
-                    if (!isNaN(query[key])) {
-                        query[key] = Number(query[key]);
-                    }
-                  });
-                  items = _.find(items, query);
                 }
 
                 deferred.resolve(items);

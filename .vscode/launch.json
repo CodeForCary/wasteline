@@ -21,6 +21,25 @@
 			"outDir": null
 		},
 		{
+			"name": "Batch",
+			"type": "node",
+			"request": "batch",
+			"program": "${workspaceRoot}\\twilio.js",
+			"stopOnEntry": false,
+			"args": [],
+			"cwd": "${workspaceRoot}",
+			"runtimeExecutable": null,
+			"runtimeArgs": [
+				"--nolazy"
+			],
+			"env": {
+				"NODE_ENV": "development"
+			},
+			"externalConsole": false,
+			"sourceMaps": false,
+			"outDir": null
+		},
+		{
 			"name": "Attach",
 			"type": "node",
 			"request": "attach",
