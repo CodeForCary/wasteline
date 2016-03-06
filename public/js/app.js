@@ -53,6 +53,7 @@
                         var td = $("<td>").text((new Date(item.day)).getDate());
                         if (item.isHoliday) {
                             td.addClass("holiday");
+                            $("<h6>").text("HOLIDAY").appendTo(td);
                             $("<p>").text(item.holiday).appendTo(td);
                         }
                         tableRow.append(td);

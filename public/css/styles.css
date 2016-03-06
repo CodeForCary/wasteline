@@ -173,6 +173,15 @@ button:disabled {
     color: white;
 }
 
+.calendar tbody td.holiday h6 {
+    position: absolute;
+    font-weight: light;
+    font-family: helvetica, sans-serif;
+    top: 8px;
+    left: 15px;
+    font-size: 13px;
+}
+
 .calendar tr th {
     height: 24px;
     text-align: center;

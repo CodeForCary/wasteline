@@ -24,7 +24,7 @@
         isLastWeekOfYear = week >= 52 || (week === 1 && month === 11);
     
     var holidays = {
-        "St. Patrick’s Day": moment("{0}-03-17".format(year)),
+        "WasteLine Appreciation Day": moment("{0}-03-11".format(year)),
         "New Year’s Day": moment("{0}-01-01".format(!isLastWeekOfYear ? year : year + 1)),
         "Independence Day": moment("{0}-07-04".format(year)),
         "Thanksgiving": (function (year) {
