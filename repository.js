@@ -1,4 +1,5 @@
-﻿(function () {
+﻿/* global process, __dirname */
+(function () {
     "use strict";
     
     var q = require("q"),
@@ -58,28 +59,7 @@
                   items = _.find(items, query);
                 }
 
-                if (["Booking", "Invitation"].indexOf(collection) !== -1) {
-                    get.apply("Occasion")
-                        .then(function (occasions) {
-                            var itemOccasionIds = _.pluck(items, "occasionId"),
-                                filter = function (occasion) {
-                                    return itemOccasionIds.indexOf(occasion.id) !== -1;
-                                };
-
-                            console.log("OccasionIds: " + itemOccasionIds.toString());
-
-                            occasions = occasions.filter(filter);
-
-                            deferred.resolve(occasions);
-                        })
-                        .catch(function (ex) {
-                            console.log(ex);
-                            deferred.reject("Service cannot load items");
-                        });
-                }
-                else {
-                    deferred.resolve(items);
-                }
+                deferred.resolve(items);
             });
         }
         catch (ex) {
@@ -89,36 +69,12 @@
         
         return deferred.promise;
     };
-
-    var authenticate = function(credentials) {
-        var deferred = q.defer();
-
-        get.apply("User")
-            .then(function (users) {
-                var user = _.findWhere(users, credentials);
-                if (user)
-                    deferred.resolve({
-                        sessionid: generateUniqueId(),
-                        user: user
-                    });
-                else
-                    deferred.reject("No matching user found");
-            })
-            .fail(function (reason) {
-                console.error(reason);
-                deferred.reject(reason);
-            });
-
-        return deferred.promise;
-    }
     
     var service = {
         get: function (collection, query) {
             return get.call(collection, query);
         },
-        getFoodTrucks: get.bind("FoodTruck"),
-        getUsers:  get.bind("User"),
-        authenticate: authenticate
+        getUsers:  get.bind("User")
     };
     
     module.exports = service;
