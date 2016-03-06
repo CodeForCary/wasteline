@@ -1,3 +1,4 @@
+/* global process */
 (function () {
  "use strict";
 
@@ -8,8 +9,6 @@
 
   require("stringformat").extendString("format");
   
-  var config = require("./api-config.json");
-
   var proxy = (function (baseUrl) {
   	var cookieJar = rp.jar(),
       request = rp.defaults({ 
@@ -26,7 +25,6 @@
         "x-requested-with": "XMLHttpRequest",
         "content-type": "application/x-www-form-urlencoded",
         "connection": "keep-alive",
-        "authorization" : "Basic " + new Buffer(config.username + ":" + config.password).toString("base64"),
         "origin": baseUrl,
         "referer": baseUrl
       }
