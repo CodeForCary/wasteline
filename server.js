@@ -177,6 +177,23 @@ app.get('/api/NextTwoWeeks', function (req, res) {
     res.end();
 });
 
+app.post('/api/Subscribe', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "POST");
+    res.header("Content-Type", "application/json");
+    
+    var data = req.body || {};
+    
+    var subscribed = false;
+    
+    if (data.phoneNumber && data.day) {
+        subscribed = service.subscribe(data);
+    }
+  
+    res.send({ subscribed: subscribed });
+    res.end();
+});
+
 var port = process.env.PORT || process.env.WASTELINE_PORT || 80;
 console.log((new Date(Date.now())).toLocaleString());
 console.log("Listening on port " + port);

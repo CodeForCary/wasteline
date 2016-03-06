@@ -4,6 +4,7 @@
 	var _ = require("lodash"),
         moment = require("moment-timezone"),
         geocoder = require("./geocoder"),
+        repo = require("./repository"),
 		q = require("q");
 
 	require("stringformat").extendString("format");
@@ -116,12 +117,25 @@
             
             return nextTwoWeeks;
         };
+        
+        var subscribe = function (data) {
+            if (data.phoneNumber && data.day) {
+                var notification = {
+                    number: data.phoneNumber,
+                    day: Number(data.day)
+                };
+                var value = repo.put("Notification", notification);
+                return Boolean(value);
+            }
+            return false;
+        }
 
 		return {
             geocodeAddress: geocodeAddress,
 			isHolidayWeek: isHolidayWeek,
             isRecyclingWeek: isRecyclingWeek,
-            getNextTwoWeeks: getNextTwoWeeks
+            getNextTwoWeeks: getNextTwoWeeks,
+            subscribe: subscribe
 		};
 	})();
 
