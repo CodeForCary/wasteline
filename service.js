@@ -17,15 +17,15 @@
         }
     };
     
-    var year = (new Date()).getFullYear();
+    var now = moment(),
+        week = now.get("week"),
+        month = now.get("month"),
+        year = now.get("year"),
+        isLastWeekOfYear = week >= 52 || (week === 1 && month === 11);
     
     var holidays = {
-        "Employee Appreciation Day": (function (year) {
-                var first = new Date(year, 2, 1),
-                    dayOfWeek = first.getDay();
-                return moment("{0}-03-{1}".format(year, ("0" + String(1 + (12 - dayOfWeek) % 7)).slice(-2)));
-            })(year),
-        "New Year’s Day": moment("{0}-01-01".format(year)),
+        "St. Patrick’s Day": moment("{0}-03-17".format(year)),
+        "New Year’s Day": moment("{0}-01-01".format(!isLastWeekOfYear ? year : year + 1)),
         "Independence Day": moment("{0}-07-04".format(year)),
         "Thanksgiving": (function (year) {
                 var first = new Date(year, 10, 1),
