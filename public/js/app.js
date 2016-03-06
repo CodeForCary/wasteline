@@ -150,11 +150,24 @@
             
         var phoneNumber = form.find("input[type=text]").eq(0).val();
         var day = 1;
+        
+        // Remove non-digits from phoneNumber
+        phoneNumber = phoneNumber.replace(/\D/g, "");
+        if (phoneNumber.length !== 10) {
+            $("#subscribeModal .error").text("Invalid phone number");
+            return;
+        }
+        else {
+            $("#subscribeModal .error").text("");
+            phoneNumber = "+1" + phoneNumber;
+        }
+        
         button.prop("disabled", true);
         subscribe({ phoneNumber: phoneNumber, day: day })
             .then(displayResult)
             .finally(function () {
                 button.prop("disabled", false);
+                $("#subscribeModal [data-dismiss]").trigger("click");
             });
     });
     
