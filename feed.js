@@ -7,7 +7,8 @@
         _ = require('lodash'),
         moment = require('moment');
     
-    var repo = require("./repository");
+    var repo = require("./repository"),
+        service = require("./service");
 
     var feed = new Feed({
         title: 'WasteLine',
@@ -23,7 +24,7 @@
         }
     });
     
-    var service = {
+    var self = {
         getFeed: function (code) {
             var deferred = q.defer();
             repo.get("Notification", { code: code }).then(function (notifications) {
@@ -47,8 +48,12 @@
                     notification.feed.items = [];
                     
                     if (hoursFromNow >= -2 && hoursFromNow <= 4) {
+                        var alertText = service.isRecyclingWeek(notification.cycle , Date.now()) ? "Garbage AND Recycling collection" : "Garbage collection ONLY";
+                        
+                        alertText += (notification.alert.day === notification.day) ? " TODAY" : (notification.alert.day === notification.day - 1) ? " TOMORROW" : "";
+                        
                         notification.feed.addItem({
-                            title: "Garbage pick-up",
+                            title: alertText,
                             link: "http://wasteline.net/notifications/" + code,
                             description: "Garbage only",
                             author: [{
@@ -70,5 +75,5 @@
         }
     };
     
-    module.exports = service;
+    module.exports = self;
 })();
