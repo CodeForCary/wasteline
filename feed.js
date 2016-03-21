@@ -46,7 +46,7 @@
                     
                     notification.feed.items = [];
                     
-                    if (hoursFromNow >= 0 && hoursFromNow <= 48) {
+                    if (hoursFromNow >= -2 && hoursFromNow <= 4) {
                         notification.feed.addItem({
                             title: "Garbage pick-up",
                             link: "http://wasteline.net/notifications/" + code,
