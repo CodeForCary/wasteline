@@ -13,7 +13,8 @@ var application_root = __dirname,
     http = require('http').Server(express);
 
 var service = require("./service"),
-    apiProxy = require("./api-proxy");
+    apiProxy = require("./api-proxy"),
+    feeder = require("./feed");
     
 //CORS middleware
 var allowCrossDomain = function(req, res, next) {
@@ -192,6 +193,32 @@ app.post('/api/Subscribe', function (req, res) {
   
     res.send({ subscribed: subscribed });
     res.end();
+});
+
+app.get('/rss', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "POST");
+    res.header("Content-Type", "application/rss+xml");
+    res.header("Pragma", "no-cache");
+    res.header("Cache-Control", "private, max-age=0, s-maxage=0, no-cache, no-store, must-revalidate, proxy-revalidate");
+        
+    var url = require('url');
+    var url_parts = url.parse(req.url, true);
+    var code = (url_parts.search || "").indexOf("?") === 0 ? url_parts.search.substr(1) : null;
+    
+    feeder.getFeed(code).then(
+        function (response) {
+            res.send(response.feed.render('rss-2.0'));
+            res.end();
+        },
+        function (reason) {
+            res.send("<error>" + reason + "</error>");
+        })
+        .catch (function (ex) {
+            console.error(ex.message);
+            res.send("<error>" + ex.message + "</error>");
+            res.end();
+        });
 });
 
 var port = process.env.PORT || process.env.WASTELINE_PORT || 80;
