@@ -1,6 +1,6 @@
 {
   "name": "wasteline",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Town of Cary waste/recycling reminder app",
   "main": "service.js",
   "dependencies": {
@@ -26,7 +26,9 @@
     "stylus": "0.42.3",
     "twilio": "^2.9.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jshint": "^2.9.4"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

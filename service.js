@@ -25,7 +25,6 @@
         isLastWeekOfYear = week >= 52 || (week === 1 && month === 11);
     
     var holidays = {
-        "WasteLine Appreciation Day": moment("{0}-03-11".format(year)),
         "New Year’s Day": moment("{0}-01-01".format(!isLastWeekOfYear ? year : year + 1)),
         "Independence Day": moment("{0}-07-04".format(year)),
         "Thanksgiving": (function (year) {
@@ -72,8 +71,16 @@
                 } 
                 return isInWeek;
             });
+                
+            var hasHolidayBeforeFriday = _.some(holidays, function (holiday) {
+                var isInWeek = holiday.isBetween(weekdayRange[0].subtract(1, "second"), weekdayRange[1].add(1, "second")) && holiday.weekday() < 5;
+                if (isInWeek) {
+                    holidayInWeek = holiday;
+                } 
+                return isInWeek;
+            });
             
-            return hasHolidayAfterMonday ? holidayInWeek : null;
+            return hasHolidayBeforeFriday ? holidayInWeek : null;
         };
 
 		var isRecyclingWeek = function (cycle, day) {
@@ -105,7 +112,7 @@
                             day: day,
                             cycle: isRecyclingWeek("blue", day) ? "Blue" : "Yellow",
                             isHoliday: holidayInWeek !== null ? (holidayInWeek.date() === day.date()) : false,
-                            holiday: _.first(Object.keys(holidays), function (name) {
+                            holiday: _.find(Object.keys(holidays), function (name) {
                                 return holidayInWeek ? (holidayInWeek.date() === holidays[name].date() && holidayInWeek.month() === holidays[name].month()) : null
                             }) || null 
                         };

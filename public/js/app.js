@@ -269,6 +269,7 @@
     };
     
     var findAddressInCache = function (address) {
+        var CACHE_DURATION = 15; //days
         var deferred = q.defer();
         localforage.keys(function (err, keys) {
             if (keys && keys.length) {
@@ -278,15 +279,19 @@
                 if (addressMatches.length) {
                     localforage.getItem(addressMatches[0], function (err, value) {
                         if (!err && typeof(value) === "object") {
-                            deferred.resolve(value);
+                            var isExpired = moment().diff(moment(value.timestamp || 0), 'days') > CACHE_DURATION;
+                            if (isExpired)
+                                deferred.reject('expired');
+                            else
+                                deferred.resolve(value);
                         }
                         else {
-                            deferred.reject();
+                            deferred.reject('not found');
                         }
                     });
                 }
                 else {
-                    deferred.reject();
+                    deferred.reject('cache empty');
                 }
             }
             else {
@@ -317,8 +322,8 @@
         
         ["blue", "yellow"].forEach(function (cycle, i) {
             var td = $(".calendar tbody tr." + cycle + " td").eq(index);
-            if (td.parent().find(".holiday").index() >= td.index()) {
-                td = td.prev("td");
+            if (td.parent().find(".holiday").index() <= td.index()) {
+                td = td.next("td");
             }
             if (cycle === data.cycle.toLowerCase()) {
                 $("<p>").text("Garbage and Recycling").appendTo(td);
