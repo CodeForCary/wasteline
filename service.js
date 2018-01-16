@@ -26,6 +26,11 @@
     
     var holidays = {
         "New Year’s Day": moment("{0}-01-01".format(!isLastWeekOfYear ? year : year + 1)),
+        "MLK Jr Day": (function (year) {
+                var first = new Date(year, 1, 1),
+                    dayOfWeek = first.getDay();
+                return moment("{0}-01-{1}".format(year, 15 + (4 - dayOfWeek) % 7));
+            })(year),
         "Independence Day": moment("{0}-07-04".format(year)),
         "Thanksgiving": (function (year) {
                 var first = new Date(year, 10, 1),
