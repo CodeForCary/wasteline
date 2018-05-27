@@ -28,6 +28,7 @@
     "twilio": "^2.9.0"
   },
   "devDependencies": {
+    "feed": "^1.1.1",
     "jshint": "^2.9.4"
   },
   "scripts": {

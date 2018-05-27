@@ -31,7 +31,19 @@
                     dayOfWeek = first.getDay();
                 return moment("{0}-01-{1}".format(year, 15 + (4 - dayOfWeek) % 7));
             })(year),
+        "Memorial Day": (function (year) {
+                var first = new Date(year, 4, 1),
+                    dayOfWeek = first.getDay();               
+                return moment("{0}-05-{1}".format(year, 25 + (12 - dayOfWeek) % 7));
+            })(year),
         "Independence Day": moment("{0}-07-04".format(year)),
+        "Labor Day": (function (year) {
+                var date = moment().set('year', year).set('month', 8).set('date', 1).isoWeekday(8);
+                if(date.date() == 8) { 
+                    date = date.isoWeekday(-6)
+                }
+                return date;
+            })(year),
         "Thanksgiving": (function (year) {
                 var first = new Date(year, 10, 1),
                     dayOfWeek = first.getDay();

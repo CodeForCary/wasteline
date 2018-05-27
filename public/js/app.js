@@ -35,7 +35,7 @@
             $(this).val("");
         });
         
-        if (!window.orientation) {
+        if (window.matchMedia && window.matchMedia("only screen and (max-width: 760px)")) {
             $("#geolocate-form input[type=text]").addClass("not-mobile").val("Only enabled for mobile devices");
             $("#geolocate-form button").prop("disabled", true);
         }
