@@ -43,6 +43,12 @@
                     date = date.isoWeekday(-6)
                 }
                 return date;
+            })(year),            
+        "Veterans Day": (function (year) {
+                var eleventh = new Date(year, 10, 11),
+                    dayOfWeek = eleventh.getDay(),
+                    observed = dayOfWeek === 0 ? 12  : dayOfWeek === 6 ? 13 : 11;
+                return moment(new Date(year, 10, observed));
             })(year),
         "Thanksgiving": (function (year) {
                 var first = new Date(year, 10, 1),
