@@ -16,14 +16,14 @@
 			"env": {
 				"NODE_ENV": "development"
 			},
-			"externalConsole": false,
+			"console": "internalConsole",
 			"sourceMaps": false,
-			"outDir": null
+			"outFiles": []
 		},
 		{
 			"name": "Batch",
 			"type": "node",
-			"request": "batch",
+			"request": "launch",
 			"program": "${workspaceRoot}\\twilio.js",
 			"stopOnEntry": false,
 			"args": [],
@@ -35,9 +35,9 @@
 			"env": {
 				"NODE_ENV": "development"
 			},
-			"externalConsole": false,
+			"console": "internalConsole",
 			"sourceMaps": false,
-			"outDir": null
+			"outFiles": []
 		},
 		{
 			"name": "Attach",
@@ -45,7 +45,7 @@
 			"request": "attach",
 			"port": 5858,
 			"sourceMaps": false,
-			"outDir": null,
+			"outFiles": [],
 			"localRoot": "${workspaceRoot}",
 			"remoteRoot": null
 		}
