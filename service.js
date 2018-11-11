@@ -36,18 +36,23 @@
                     dayOfWeek = first.getDay();               
                 return moment("{0}-05-{1}".format(year, 25 + (12 - dayOfWeek) % 7));
             })(year),
-        "Independence Day": moment("{0}-07-04".format(year)),
+        "Independence Day": (function (year) {
+            var fourth = new Date(year, 6, 4),
+                dayOfWeek = fourth.getDay(),
+                observed = dayOfWeek === 0 ? 3  : dayOfWeek === 6 ? 5 : 4;
+            return moment(new Date(year, 6, observed));
+        })(year),
         "Labor Day": (function (year) {
                 var date = moment().set('year', year).set('month', 8).set('date', 1).isoWeekday(8);
                 if(date.date() == 8) { 
                     date = date.isoWeekday(-6)
                 }
                 return date;
-            })(year),            
+            })(year),
         "Veterans Day": (function (year) {
                 var eleventh = new Date(year, 10, 11),
                     dayOfWeek = eleventh.getDay(),
-                    observed = dayOfWeek === 0 ? 12  : dayOfWeek === 6 ? 13 : 11;
+                    observed = dayOfWeek === 0 ? 10  : dayOfWeek === 6 ? 13 : 11;
                 return moment(new Date(year, 10, observed));
             })(year),
         "Thanksgiving": (function (year) {
