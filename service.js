@@ -39,7 +39,7 @@
         "Independence Day": (function (year) {
             var fourth = new Date(year, 6, 4),
                 dayOfWeek = fourth.getDay(),
-                observed = dayOfWeek === 0 ? 3  : dayOfWeek === 6 ? 5 : 4;
+                observed = dayOfWeek === 0 ? 5  : dayOfWeek === 6 ? 3 : 4;
             return moment(new Date(year, 6, observed));
         })(year),
         "Labor Day": (function (year) {
@@ -52,7 +52,7 @@
         "Veterans Day": (function (year) {
                 var eleventh = new Date(year, 10, 11),
                     dayOfWeek = eleventh.getDay(),
-                    observed = dayOfWeek === 0 ? 10  : dayOfWeek === 6 ? 13 : 11;
+                    observed = dayOfWeek === 0 ? 12  : dayOfWeek === 6 ? 10 : 11;
                 return moment(new Date(year, 10, observed));
             })(year),
         "Thanksgiving": (function (year) {
