@@ -269,7 +269,7 @@
     };
     
     var findAddressInCache = function (address) {
-        var CACHE_DURATION = 15; //days
+        var CACHE_DURATION = 120; //days
         var deferred = q.defer();
         localforage.keys(function (err, keys) {
             if (keys && keys.length) {
