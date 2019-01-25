@@ -42,15 +42,16 @@
         try {
         request({
 	        method: "GET",
-	        uri: "{0}?sensor=false&address={1}".format(baseUrl, encodeURIComponent(address))
+	        uri: "{0}?benchmark=9&format=json&address={1}".format(baseUrl, encodeURIComponent(address))
 	      }).then(function (response) {
 	      	try {
                 var json = JSON.parse(response);
-                if (json && json.results && json.results.length && json.results[0].geometry && json.results[0].geometry.location) {
-                	deferred.resolve(json.results[0].geometry.location);
+                if (json && json.result && json.result.addressMatches && json.result.addressMatches.length && json.result.addressMatches[0].coordinates) {
+                  var coords = json.result.addressMatches[0].coordinates;
+                  deferred.resolve({ lng: coords.x, lat: coords.y });
                 }
                 else {
-                	deferred.reject("Unexpected JSON response format: results[0].geometry.location not found");
+                	deferred.reject("Unexpected JSON response format: result.addressMatches[0].coordinates not found");
                 }
               }
               catch (ex) {
@@ -68,7 +69,7 @@
         return deferred.promise;
       }
     };
-  })("https://maps.google.com/maps/api/geocode/json");
+  })("https://geocoding.geo.census.gov/geocoder/locations/onelineaddress");
 
   module.exports = geocoder;
 })();
