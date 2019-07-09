@@ -35,7 +35,7 @@
             $(this).val("");
         });
         
-        if (window.matchMedia && window.matchMedia("only screen and (max-width: 760px)")) {
+        if (!isMobile()) {
             $("#geolocate-form input[type=text]").addClass("not-mobile").val("Only enabled for mobile devices");
             $("#geolocate-form button").prop("disabled", true);
         }
@@ -73,6 +73,15 @@
         _.delay(function () {
             $("#" + id).removeClass("hidden");
         }, 2000);
+    }
+
+    function isMobile() {
+        var match = window.matchMedia || window.msMatchMedia;
+        if(match) {
+            var mq = match("(pointer:coarse)");
+            return mq.matches;
+        }
+        return false;
     }
     
     // Geolocate
