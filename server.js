@@ -1,4 +1,4 @@
-﻿/* global process, __dirname */
+/* global process, __dirname */
 var application_root = __dirname,
     express = require("express"),
     bodyParser = require("body-parser"),
@@ -11,6 +11,19 @@ var application_root = __dirname,
     db = require("./repository"),
     app = express(),
     http = require('http').Server(express);
+
+// Certificate
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/wasteline.net/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/wasteline.net/fullchain.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/wasteline.net/fullchain.pem', 'utf8');
+
+const credentials = {
+	key: privateKey,
+	cert: certificate,
+	ca: ca
+};
+
+const httpsServer = https.createServer(credentials, app);
 
 var service = require("./service"),
     apiProxy = require("./api-proxy"),
