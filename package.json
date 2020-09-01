@@ -10,7 +10,7 @@
     "debug": "^2.6.9",
     "errorhandler": "^1.4.3",
     "express": "^4.16.4",
-    "hapi": "^8.2.0",
+    "hapi": "^18.1.0",
     "http-proxy": "^1.8.1",
     "jade": "~1.6.0",
     "method-override": "^2.3.5",
