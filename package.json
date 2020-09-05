@@ -11,7 +11,7 @@
     "errorhandler": "^1.4.3",
     "express": "^4.16.4",
     "hapi": "^8.2.0",
-    "http-proxy": "^1.8.1",
+    "http-proxy": "^1.18.1",
     "jade": "~1.6.0",
     "method-override": "^2.3.5",
     "moment": "^2.22.2",
